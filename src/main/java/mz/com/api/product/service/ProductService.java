@@ -22,7 +22,7 @@ public class ProductService {
         return productRepository.findAll();
     }
 
-    public ResponseEntity<?> create(Product model) {
+    public ResponseEntity<?> save(Product model) {
 
         if (model.getName().equals("")) {
 
@@ -34,7 +34,16 @@ public class ProductService {
             return new ResponseEntity<ResponseModel>(responseModel, HttpStatus.BAD_REQUEST);
         } else {
 
-            return new ResponseEntity<Product>(productRepository.save(model), HttpStatus.CREATED);
+            if (model.getId() > 0) {
+
+                //update
+                return new ResponseEntity<Product>(productRepository.save(model), HttpStatus.OK);
+            } else {
+
+                //create
+                return new ResponseEntity<Product>(productRepository.save(model), HttpStatus.CREATED);
+            }
+
         }
     }
 }
