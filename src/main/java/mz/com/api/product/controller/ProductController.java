@@ -13,7 +13,6 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
 import mz.com.api.product.model.Product;
-import mz.com.api.product.repository.ProductRepository;
 import mz.com.api.product.service.ProductService;
 
 @RestController

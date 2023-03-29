@@ -1,5 +1,7 @@
 package mz.com.api.product.service;
 
+import java.util.Optional;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -22,6 +24,22 @@ public class ProductService {
         return productRepository.findAll();
     }
 
+    public ResponseEntity<?> read(Long id) {
+
+        Optional<Product> finder = productRepository.findById(id);
+
+        return new ResponseEntity<Optional<Product>>(finder, HttpStatus.OK);
+
+    }
+
+    public ResponseEntity<?> delete(Long id) {
+
+        productRepository.deleteById(id); // deleteById
+        responseModel.setMsg("Product deleted sucessfully");
+        return new ResponseEntity<ResponseModel>(responseModel, HttpStatus.OK);
+
+    }
+
     public ResponseEntity<?> save(Product model) {
 
         if (model.getName().equals("")) {
@@ -36,11 +54,11 @@ public class ProductService {
 
             if (model.getId() > 0) {
 
-                //update
+                // update
                 return new ResponseEntity<Product>(productRepository.save(model), HttpStatus.OK);
             } else {
 
-                //create
+                // create
                 return new ResponseEntity<Product>(productRepository.save(model), HttpStatus.CREATED);
             }
 
